@@ -1,0 +1,45 @@
+---
+title: "Lesson 3"
+output: html_document
+---
+
+```{r setup}
+library(dplyr)
+library(magrittr)
+library(ggplot2)
+library(tidyr)
+theme_set(theme_minimal())
+```
+
+
+
+## First, let's slow down a bit
+
+Try to complete [Task 3 and 4](lesson3-tasks.html#task-3-detecting-overdispersion-with-a-posterior-predictive-check) from Lesson 2 (and possibly others from the previous lessons)
+
+Pick projects!
+
+## Note on models
+
+- Reuse methodology slides: https://docs.google.com/presentation/d/1jkcKfTOupedZRoJZ9qSuGVDBjlzZFt6vOyEyN0pwduY/edit?usp=sharing
+
+## Linear regression
+
+- The most ubiquitous type of model --- see e.g. https://lindeloev.github.io/tests-as-linear/
+- Taylor series
+- Intercept, coefficients
+- [Dummy coding](https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faqwhat-is-dummy-coding/)
+  - There are other ways to code (e.g. [effect coding](https://stats.oarc.ucla.edu/other/mult-pkg/faq/general/faqwhat-is-effect-coding/))
+  - `model.matrix` in `R` does the coding for you
+- Linear predictors and matrix multiplication
+  - Intercept in the matrix
+- [Least squares](https://en.wikipedia.org/wiki/Least_squares) and  its relatio to normal distribution
+  - Maximum likelihood estimator is equivalent to least-squares.
+- [Generalized linear models](https://en.wikipedia.org/wiki/Generalized_linear_model) (GLM)
+  - Link function, inverse link function
+  - Most common link functions:
+    - log for positive outcomes (i.e. exponentiate the predictors), 
+    - logit (i.e. apply inverse logit to the predictor) for outcomes in [0, 1] - most notably for probabilities in logistic regression.
+- Posterior predictive checks as a method to determine which predictors to add
+
+Now, let's do some tasks. Note that they match workflow (simple stuff first, ...)
