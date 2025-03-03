@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lesson 3 - Tasks</title>
+
+<script src="site_libs/header-attrs-2.29/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Bayesian probabilistic programming in Stan - 2025 course</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li>
+  <a href="lesson1-tasks.html">Lesson 1 - Tasks</a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+
+
+<h1 class="title toc-ignore">Lesson 3 - Tasks</h1>
+
+</div>
+
+
+<div id="task-1-bayesian-t-test" class="section level2">
+<h2>Task 1: Bayesian “t-test”</h2>
+<p><strong>This is a copy of Task 7 from Lesson 1</strong></p>
+<p>Expand the model from lesson 1 so that you now have two sets of data
+(possibly of unequal size), each belonging to a different group and
+estimate the mean in the first group and the difference in means. More
+specifically, the model should look like this:</p>
+<p><span class="math display">\[
+y_A \sim N(\mu, \sigma_A) \\
+y_B \sim N(\mu + \delta, \sigma_B) \\
+\mu \sim N(0, 1)\\
+\delta \sim N\left(0, \frac{1}{2}\right) \\
+\sigma_A, \sigma_B \sim HalfN(0, 1)
+\]</span></p>
+<p>(you can keep the location and scale of the prior as data, but you
+can also hardcode it)</p>
+<p>Repeatedly simulate data according to the model and fit it.</p>
+<p>How big do the groups need to be, so that your posterior interval for
+<span class="math inline">\(\delta\)</span> excludes 0 most of the time?
+No need for a very precise answer, just a ballpark estimate, so running
+at most 5 simulations per sample size setting should be enough to get a
+good grasp.</p>
+</div>
+<div id="task-2-convert-to-long-format" class="section level2">
+<h2>Task 2: Convert to “long format”</h2>
+<p>Adapt the model from the previous task so that a) the standard
+deviation (<span class="math inline">\(\sigma\)</span>) is the same for
+all data and b) the observed <span class="math inline">\(y\)</span> are
+all stored in a single vector of length <span
+class="math inline">\(N\)</span> and another vector of length <span
+class="math inline">\(N\)</span> encodes group membership. I.e. your
+<code>data</code> section should look something like:</p>
+<pre><code>data {
+   int&lt;lower=0&gt; N;
+   vector[N] y;
+   array[N] int&lt;lower=0,upper=1&gt; isB;
+}</code></pre>
+<p>Hint: after converting <code>isB</code> into a <code>vector</code>
+(with <code>to_vector</code>) you can obtain a vector of length
+<code>N</code> of means for all observations by addition and
+multiplication.</p>
+<p>You can then directly pass the vector to <code>normal_lpdf</code>,
+i.e. have</p>
+<pre><code>target += normal_lpdf(y | __COMPUTATION_HERE__, sigma);</code></pre>
+<p>If stuck, see <a
+href="https://mc-stan.org/docs/stan-users-guide/regression.html"
+class="uri">https://mc-stan.org/docs/stan-users-guide/regression.html</a></p>
+<p>For extra credit, you may try to figure out how to keep the distinct
+standard deviations following a similar computation.</p>
+</div>
+<div id="task-3-add-a-continuous-predictor" class="section level2">
+<h2>Task 3: Add a continuous predictor</h2>
+<p>Add a new continuous predictor (a vector of real numbers) for each
+data point and add an extra coefficient (a new variable in the
+<code>parameters</code> block) to model its influence.</p>
+<p>Simulate data and check parameter recovery.</p>
+</div>
+<div id="task-4-matrix-multiplication" class="section level2">
+<h2>Task 4: Matrix multiplication</h2>
+<p>Make a copy of the model and convert it to matrix multiplication
+format. Make the number of columns in the design matrix variable. I.e.
+your <code>data</code> section should look something like:</p>
+<pre><code>data {
+  int&lt;lower=0&gt; N;   // number of data items
+  int&lt;lower=0&gt; K;   // number of predictors
+  matrix[N, K] x;   // predictor matrix
+  vector[N] y;      // outcome vector
+}</code></pre>
+<p>Test that with the same data, you get the same results as in the
+previous version (since Hamiltonian Monte Carlo is stochastic you won’t
+get exactly the same results, but they should be numerically very
+close)</p>
+</div>
+<div id="task-5-compare-to-users-guide" class="section level2">
+<h2>Task 5: Compare to user’s guide</h2>
+<p>Compare what you’ve built with the example linear regression models
+in Stan’s User’s guide: <a
+href="https://mc-stan.org/docs/stan-users-guide/regression.html#linear-regression"
+class="uri">https://mc-stan.org/docs/stan-users-guide/regression.html#linear-regression</a></p>
+<p>Generally, don’t be afraid to use the User’s guide as a starting
+point for your models, it is a great resource!</p>
+</div>
+<div id="task-6-dummy-coding" class="section level2">
+<h2>Task 6: Dummy coding</h2>
+<p>Use <a
+href="https://stats.idre.ucla.edu/other/mult-pkg/faq/general/faqwhat-is-dummy-coding/">dummy
+coding</a> to extend the model to have 3 groups instead of 2 in the
+categorical predictor. Your Stan code should not need to change.</p>
+<p>Simulate data, fit, check parameter recovery.</p>
+</div>
+<div id="task-7-negative-binomial-regression" class="section level2">
+<h2>Task 7: Negative binomial regression</h2>
+<p>Starting with the previous model, create a negative binomial
+regression model with a log link.</p>
+<p>Simulate data, fit, check parameter recovery (you can use a simpler
+set of predictors if you prefer).</p>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
