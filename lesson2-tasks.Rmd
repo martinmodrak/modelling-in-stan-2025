@@ -28,15 +28,17 @@ knowledge:
 - Try to detect the model-data mismatch with a posterior predictive check.
   
 
-R:
-  - Use `fit$draws(format = "draws_matrix")` to get a matrix of draws, then use `rpois`` to generate the predictions as the Stan model assumes
-  - use either `bayesplot::ppc_stat` with a stat measuring the dispersion (e.g. variance, sd, ...) or `bayesplot::ppc_dens_overlay`
-Python: use either  `arviz.plot_bpv()` with `kind="t_stat"`  and a stat measuring the dispersion (e.g. variance, sd, ...) or `arviz.plot_ppc`
+  - **In R:**
+    - Use `fit$draws(format = "draws_matrix")` to get a matrix of draws, then use `rpois` to generate the predictions as the Stan model assumes
+    - use either `bayesplot::ppc_stat` with a stat measuring the dispersion (e.g. variance, sd, ...) or `bayesplot::ppc_dens_overlay`
+  
+  - **In Python:**  
+    - use either  `arviz.plot_bpv()` with `kind="t_stat"`  and a stat measuring the dispersion (e.g. variance, sd, ...) or `arviz.plot_ppc`
 
 - What is the smallest number of observations we need to reliably detect the problem?
 
 - Implement a negative binomial model and see how the check behaves now. 
-  - Use [`neg_binomial_2_lpmf`](https://mc-stan.org/docs/functions-reference/unbounded_discrete_distributions.html#nbalt))
+  - Use [`neg_binomial_2_lpmf`](https://mc-stan.org/docs/functions-reference/unbounded_discrete_distributions.html#nbalt)
   - Put an `exponential(1)` prior on the overdispersion parameter.
 
 ## Task 4: A bit more open-ended exploration

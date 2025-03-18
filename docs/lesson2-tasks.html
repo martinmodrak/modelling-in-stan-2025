@@ -301,19 +301,31 @@ class="math inline">\(\phi = \frac{1}{2}\)</span> (<code>size</code> in
 R’s <code>rnbinom</code>), fit with the model from Task 2. Do you
 recover the simulated mean of the neg. binomial?</p></li>
 <li><p>Try to detect the model-data mismatch with a posterior predictive
-check.</p></li>
-</ul>
-<p>R: - Use <code>fit$draws(format = "draws_matrix")</code> to get a
-matrix of draws, then use
-<code>rpois`` to generate the predictions as the Stan model assumes   - use either</code>bayesplot::ppc_stat<code>with a stat measuring the dispersion (e.g. variance, sd, ...) or</code>bayesplot::ppc_dens_overlay<code>Python: use either</code>arviz.plot_bpv()<code>with</code>kind=“t_stat”<code>and a stat measuring the dispersion (e.g. variance, sd, ...) or</code>arviz.plot_ppc`</p>
+check.</p>
 <ul>
+<li><strong>In R:</strong>
+<ul>
+<li>Use <code>fit$draws(format = "draws_matrix")</code> to get a matrix
+of draws, then use <code>rpois</code> to generate the predictions as the
+Stan model assumes</li>
+<li>use either <code>bayesplot::ppc_stat</code> with a stat measuring
+the dispersion (e.g. variance, sd, …) or
+<code>bayesplot::ppc_dens_overlay</code></li>
+</ul></li>
+<li><strong>In Python:</strong>
+<ul>
+<li>use either <code>arviz.plot_bpv()</code> with
+<code>kind="t_stat"</code> and a stat measuring the dispersion
+(e.g. variance, sd, …) or <code>arviz.plot_ppc</code></li>
+</ul></li>
+</ul></li>
 <li><p>What is the smallest number of observations we need to reliably
 detect the problem?</p></li>
 <li><p>Implement a negative binomial model and see how the check behaves
 now.</p>
 <ul>
 <li>Use <a
-href="https://mc-stan.org/docs/functions-reference/unbounded_discrete_distributions.html#nbalt"><code>neg_binomial_2_lpmf</code></a>)</li>
+href="https://mc-stan.org/docs/functions-reference/unbounded_discrete_distributions.html#nbalt"><code>neg_binomial_2_lpmf</code></a></li>
 <li>Put an <code>exponential(1)</code> prior on the overdispersion
 parameter.</li>
 </ul></li>
