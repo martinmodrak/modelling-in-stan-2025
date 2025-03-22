@@ -44,7 +44,7 @@ plot_densities(c(1,2,8))
 plot_densities(c(15, 30, 50), mu_range = c(-1,1), log_sigma_range = c(-0.5,1))
 ```
   
-- Explain divergences - we will mostly follow https://mc-stan.org/misc/warnings
+- Recall divergences (previous lesson) - see also https://mc-stan.org/misc/warnings
   - Divergences are your friend!
 - Sampling statements vs. target increments (https://mc-stan.org/docs/reference-manual/statements.html#sampling-statements.section)
   - "Up to a constant" - recall the half-normal prior for sigma.
@@ -72,6 +72,7 @@ plot_densities(c(15, 30, 50), mu_range = c(-1,1), log_sigma_range = c(-0.5,1))
   - Prior, fit to data (likelihood), computation
   - Checking parameter recovery from simulations is a simple computation check
 - Priors can (and should) be tested: _prior predictive check_
+<!-- Needs better explanation next year -->
   - Simulate data from the prior, check that the data match domain expertise
   - If they don't the prior is bad
     - It may however be unclear how to get a better prior...
