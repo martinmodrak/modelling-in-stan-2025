@@ -13,9 +13,7 @@ theme_set(theme_minimal())
 
 
 
-## First, let's slow down a bit
-
-Try to complete [Task 3 and 4](lesson3-tasks.html#task-3-detecting-overdispersion-with-a-posterior-predictive-check) from Lesson 2 (and possibly others from the previous lessons)
+## Organization
 
 Pick projects!
 
@@ -33,7 +31,7 @@ Pick projects!
   - `model.matrix` in `R` does the coding for you
 - Linear predictors and matrix multiplication
   - Intercept in the matrix
-- [Least squares](https://en.wikipedia.org/wiki/Least_squares) and  its relatio to normal distribution
+- [Least squares](https://en.wikipedia.org/wiki/Least_squares) and  its relation to normal distribution
   - Maximum likelihood estimator is equivalent to least-squares.
 - [Generalized linear models](https://en.wikipedia.org/wiki/Generalized_linear_model) (GLM)
   - Link function, inverse link function
