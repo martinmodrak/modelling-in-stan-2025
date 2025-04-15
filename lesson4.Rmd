@@ -4,7 +4,7 @@ output: html_document
 ---
 
 
-
+- Hierarchical models - see https://betanalpha.github.io/assets/case_studies/hierarchical_modeling.html for extremely detailed writeup.
 - Random effects
   - Population of effects
   - Shrinkage

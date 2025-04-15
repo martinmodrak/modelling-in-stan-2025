@@ -57,6 +57,8 @@ For extra credit, you may try to figure out how to keep the distinct standard de
 
 Add a new continuous predictor (a vector of real numbers) for each data point and add an extra coefficient (a new variable in the `parameters` block) to model its influence. 
 
+<!-- TODO lepe vysvetlit, asi ukazat matematickou formulaci modelu -->
+
 Simulate data and check parameter recovery.
 
 ## Task 4: Matrix multiplication
