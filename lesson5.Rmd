@@ -11,7 +11,6 @@ output: html_document
   - Sign, exponent, Mantissa
   - Special values: +/-Inf, NaN
   - Signed zero
-    $x = y \centernot\implies \frac{1}{x} = \frac{1}{y}$
   - [Subnormal/Denormals](https://en.wikipedia.org/wiki/Subnormal_number)
     - The subnormal floats are a linearly spaced set of values, which span the gap between the negative and positive normal floats. 
   - A nice playground:https://float.exposed/
