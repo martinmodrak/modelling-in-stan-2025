@@ -246,7 +246,7 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="lesson4-tasks.html">Lesson 4 - Tasks</a>
+  <a href="lesson5-tasks.html">Lesson 5 - Tasks</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -265,201 +265,6 @@ $(document).ready(function () {
 </div>
 
 
-<div id="brms-internals" class="section level2">
-<h2>Brms internals</h2>
-<p>Core brms abstraction: one row of data -&gt; one target increment</p>
-<pre><code>make_stancode(y ~ x, df)</code></pre>
-<pre class="stan"><code>// generated with brms 2.22.0
-functions {
-}
-data {
-  int&lt;lower=1&gt; N;  // total number of observations
-  vector[N] Y;  // response variable
-  int&lt;lower=1&gt; K;  // number of population-level effects
-  matrix[N, K] X;  // population-level design matrix
-  int&lt;lower=1&gt; Kc;  // number of population-level effects after centering
-  int prior_only;  // should the likelihood be ignored?
-}
-transformed data {
-  matrix[N, Kc] Xc;  // centered version of X without an intercept
-  vector[Kc] means_X;  // column means of X before centering
-  for (i in 2:K) {
-    means_X[i - 1] = mean(X[, i]);
-    Xc[, i - 1] = X[, i] - means_X[i - 1];
-  }
-}
-parameters {
-  vector[Kc] b;  // regression coefficients
-  real Intercept;  // temporary intercept for centered predictors
-  real&lt;lower=0&gt; sigma;  // dispersion parameter
-}
-transformed parameters {
-  real lprior = 0;  // prior contributions to the log posterior
-  lprior += student_t_lpdf(Intercept | 3, -0.2, 2.5);
-  lprior += student_t_lpdf(sigma | 3, 0, 2.5)
-    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
-}
-model {
-  // likelihood including constants
-  if (!prior_only) {
-    target += normal_id_glm_lpdf(Y | Xc, Intercept, b, sigma);
-  }
-  // priors including constants
-  target += lprior;
-}
-generated quantities {
-  // actual population-level intercept
-  real b_Intercept = Intercept - dot_product(means_X, b);
-}</code></pre>
-<pre><code>make_stancode(y ~ x + (1 | g), df)</code></pre>
-<pre class="stan"><code>// generated with brms 2.22.0
-functions {
-}
-data {
-  int&lt;lower=1&gt; N;  // total number of observations
-  vector[N] Y;  // response variable
-  int&lt;lower=1&gt; K;  // number of population-level effects
-  matrix[N, K] X;  // population-level design matrix
-  int&lt;lower=1&gt; Kc;  // number of population-level effects after centering
-  // data for group-level effects of ID 1
-  int&lt;lower=1&gt; N_1;  // number of grouping levels
-  int&lt;lower=1&gt; M_1;  // number of coefficients per level
-  array[N] int&lt;lower=1&gt; J_1;  // grouping indicator per observation
-  // group-level predictor values
-  vector[N] Z_1_1;
-  int prior_only;  // should the likelihood be ignored?
-}
-transformed data {
-  matrix[N, Kc] Xc;  // centered version of X without an intercept
-  vector[Kc] means_X;  // column means of X before centering
-  for (i in 2:K) {
-    means_X[i - 1] = mean(X[, i]);
-    Xc[, i - 1] = X[, i] - means_X[i - 1];
-  }
-}
-parameters {
-  vector[Kc] b;  // regression coefficients
-  real Intercept;  // temporary intercept for centered predictors
-  real&lt;lower=0&gt; sigma;  // dispersion parameter
-  vector&lt;lower=0&gt;[M_1] sd_1;  // group-level standard deviations
-  array[M_1] vector[N_1] z_1;  // standardized group-level effects
-}
-transformed parameters {
-  vector[N_1] r_1_1;  // actual group-level effects
-  real lprior = 0;  // prior contributions to the log posterior
-  r_1_1 = (sd_1[1] * (z_1[1]));
-  lprior += student_t_lpdf(Intercept | 3, -0.2, 2.5);
-  lprior += student_t_lpdf(sigma | 3, 0, 2.5)
-    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
-  lprior += student_t_lpdf(sd_1 | 3, 0, 2.5)
-    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
-}
-model {
-  // likelihood including constants
-  if (!prior_only) {
-    // initialize linear predictor term
-    vector[N] mu = rep_vector(0.0, N);
-    mu += Intercept;
-    for (n in 1:N) {
-      // add more terms to the linear predictor
-      mu[n] += r_1_1[J_1[n]] * Z_1_1[n];
-    }
-    target += normal_id_glm_lpdf(Y | Xc, mu, b, sigma);
-  }
-  // priors including constants
-  target += lprior;
-  target += std_normal_lpdf(z_1[1]);
-}
-generated quantities {
-  // actual population-level intercept
-  real b_Intercept = Intercept - dot_product(means_X, b);
-}</code></pre>
-<pre><code>make_stancode(y ~ x + (1 | g), df)</code></pre>
-<pre class="stan"><code>// generated with brms 2.22.0
-functions {
- /* compute correlated group-level effects
-  * Args:
-  *   z: matrix of unscaled group-level effects
-  *   SD: vector of standard deviation parameters
-  *   L: cholesky factor correlation matrix
-  * Returns:
-  *   matrix of scaled group-level effects
-  */
-  matrix scale_r_cor(matrix z, vector SD, matrix L) {
-    // r is stored in another dimension order than z
-    return transpose(diag_pre_multiply(SD, L) * z);
-  }
-}
-data {
-  int&lt;lower=1&gt; N;  // total number of observations
-  vector[N] Y;  // response variable
-  // data for group-level effects of ID 1
-  int&lt;lower=1&gt; N_1;  // number of grouping levels
-  int&lt;lower=1&gt; M_1;  // number of coefficients per level
-  array[N] int&lt;lower=1&gt; J_1;  // grouping indicator per observation
-  // group-level predictor values
-  vector[N] Z_1_1;
-  vector[N] Z_1_2;
-  int&lt;lower=1&gt; NC_1;  // number of group-level correlations
-  int prior_only;  // should the likelihood be ignored?
-}
-transformed data {
-}
-parameters {
-  real Intercept;  // temporary intercept for centered predictors
-  real&lt;lower=0&gt; sigma;  // dispersion parameter
-  vector&lt;lower=0&gt;[M_1] sd_1;  // group-level standard deviations
-  matrix[M_1, N_1] z_1;  // standardized group-level effects
-  cholesky_factor_corr[M_1] L_1;  // cholesky factor of correlation matrix
-}
-transformed parameters {
-  matrix[N_1, M_1] r_1;  // actual group-level effects
-  // using vectors speeds up indexing in loops
-  vector[N_1] r_1_1;
-  vector[N_1] r_1_2;
-  real lprior = 0;  // prior contributions to the log posterior
-  // compute actual group-level effects
-  r_1 = scale_r_cor(z_1, sd_1, L_1);
-  r_1_1 = r_1[, 1];
-  r_1_2 = r_1[, 2];
-  lprior += student_t_lpdf(Intercept | 3, -0.2, 2.5);
-  lprior += student_t_lpdf(sigma | 3, 0, 2.5)
-    - 1 * student_t_lccdf(0 | 3, 0, 2.5);
-  lprior += student_t_lpdf(sd_1 | 3, 0, 2.5)
-    - 2 * student_t_lccdf(0 | 3, 0, 2.5);
-  lprior += lkj_corr_cholesky_lpdf(L_1 | 1);
-}
-model {
-  // likelihood including constants
-  if (!prior_only) {
-    // initialize linear predictor term
-    vector[N] mu = rep_vector(0.0, N);
-    mu += Intercept;
-    for (n in 1:N) {
-      // add more terms to the linear predictor
-      mu[n] += r_1_1[J_1[n]] * Z_1_1[n] + r_1_2[J_1[n]] * Z_1_2[n];
-    }
-    target += normal_lpdf(Y | mu, sigma);
-  }
-  // priors including constants
-  target += lprior;
-  target += std_normal_lpdf(to_vector(z_1));
-}
-generated quantities {
-  // actual population-level intercept
-  real b_Intercept = Intercept;
-  // compute group-level correlations
-  corr_matrix[M_1] Cor_1 = multiply_lower_tri_self_transpose(L_1);
-  vector&lt;lower=-1,upper=1&gt;[NC_1] cor_1;
-  // extract upper diagonal of correlation matrix
-  for (k in 1:M_1) {
-    for (j in 1:(k - 1)) {
-      cor_1[choose(k - 1, 2) + j] = Cor_1[j, k];
-    }
-  }
-}</code></pre>
-<p>Stanvars!</p>
-</div>
 <div id="basics-of-numerical-mathematics" class="section level2">
 <h2>Basics of numerical mathematics</h2>
 <ul>
@@ -478,6 +283,8 @@ href="https://en.wikipedia.org/wiki/Subnormal_number">Subnormal/Denormals</a>
 <li>The subnormal floats are a linearly spaced set of values, which span
 the gap between the negative and positive normal floats.</li>
 </ul></li>
+<li>A nice playground:<a href="https://float.exposed/"
+class="uri">https://float.exposed/</a></li>
 </ul></li>
 <li>Small value + large value -&gt; lost precision</li>
 <li>Much more precision around 0 than around 1</li>
@@ -486,6 +293,26 @@ the gap between the negative and positive normal floats.</li>
 <li><code>log1p</code>, <code>log1p_exp</code>,
 <code>log_sum_exp</code>, <code>log_diff_exp</code></li>
 </ul></li>
+</ul>
+</div>
+<div id="ordinal-models" class="section level2">
+<h2>Ordinal models</h2>
+<ul>
+<li>Nice, thorough introduction: Bürkner &amp; Vuorre 2019, <a
+href="https://doi.org/10.1177/2515245918823199"
+class="uri">https://doi.org/10.1177/2515245918823199</a></li>
+<li>What are ordinal data</li>
+<li>Cumulative model
+<ul>
+<li>In Stan: <a
+href="https://mc-stan.org/docs/functions-reference/bounded_discrete_distributions.html#ordered-logistic-distribution"><code>ordered_logistic</code></a>
+function, see also the <a
+href="https://mc-stan.org/docs/stan-users-guide/regression.html#ordered-logistic.section">user’s
+guide section</a></li>
+</ul></li>
+<li>Choice of link function</li>
+<li>Continuation/stop models</li>
+<li>Differences mainly theoretical</li>
 </ul>
 </div>
 

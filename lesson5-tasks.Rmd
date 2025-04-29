@@ -1,0 +1,39 @@
+---
+title: "Lesson 5 - Tasks"
+output: html_document
+---
+
+## Task 1: Expected vs. actual
+
+Try to think about what should be the results of the following expressions. Then evaluate it in R:
+
+1) `+0 == -0`
+2) `1/-0`
+3) `1e100 +1 -1e100`
+4) `log(1 + 1e-20)`
+5) `1 + 1e-20 == 1`
+6) `log1p(1e-20)`
+7) `0 + 1e-20 == 0`
+8) `0 + 1e-300 == 0`
+
+
+## Task 2: Where does it break?
+
+Find values for variables `a` and `b`, such that
+
+1) `log(2 * exp(a))` differs substantially from `log(2) + a`
+   <!-- a <- 1000; log(2 * exp(a)); log(2) + a -->
+2) `log(a * b)` differs substantially from `log(a) + log(b)` for both `a` and `b` smaller than `10` 
+   <!-- a <- 1e-200; b <- 1e-200; log(a*b); log(a) + log(b)  -->
+2) `(a + b)^2` differs substantially from `a^2 + 2*a*b + b^2`
+   - bonus: find a solution with no infinities in intermediate results
+   
+   <!--  a <- 1e10; b <- -1e10 + 1; a^2 + 2*a*b + b^2; (a+b)^2
+         a <- 1; b <- -1 + 1e-15; a^2 + 2*a*b + b^2; (a+b)^2
+         a <- 1e200; b <- -1e200; a^2 + 2*a*b + b^2; (a+b)^2
+   -->
+
+## Task 3: Ordinal models
+
+1) Code a simulator for a cumulative logit link ordinal model
+2) Update your linear regression model to use cumulative logit likelihood

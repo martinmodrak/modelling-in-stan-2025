@@ -10,8 +10,10 @@ navbar:
     #  href: lesson2-tasks.html
     # - text: "Lesson 3 - Tasks"
     #   href: lesson3-tasks.html
-    - text: "Lesson 4 - Tasks"
-      href: lesson4-tasks.html
+    # - text: "Lesson 4 - Tasks"
+    #   href: lesson4-tasks.html
+    - text: "Lesson 5 - Tasks"
+      href: lesson5-tasks.html
 output_dir: docs
 include: ["*.html", "*.png"]
 exclude: ["R", "*.R", "*.Rmd", "DESCRIPTION", "NAMESPACE", "renv.lock", "LICENSE", "tests", "solutions", "*.exe"]

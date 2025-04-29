@@ -9,17 +9,32 @@ output: html_document
 
 Start with the code for [Lesson 3 - Task 6 (dummy coding)](https://martinmodrak.github.io/modelling-in-stan-2024/lesson3-tasks.html#task-6-dummy-coding) and/or the [regression code from Stan User's guide](https://mc-stan.org/docs/stan-users-guide/regression.html#linear-regression).
 
-Convert the 3 categorical groups into a random intercept model, i.e.:
+Convert the 3 categorical groups into a random intercept model. The model formulation in math notation would be
 
+$$
+\begin{aligned}
+y_i &\sim N(\mu_i, \sigma) \\
+\mu_i &= \alpha + \gamma_{\text{g}[i]} \\
+\gamma_g &\sim N(0, \tau) \\
+\tau &\sim HalfN(0, 1)
+\end{aligned}
+$$
+
+Where $\text{g}[i]$ is the group index for the $i$-th observation and $\gamma$ is a vector of the same length as the number of groups.
+
+Specifically you need to:
+
+1) Update the simulation code to have random intercepts (as in the math above)
+   - In R, you can generate the grouping variable as balanced by something like `group = rep(1:N_groups, length.out = N)`
 1) Remove the categorical variable from the model matrix
 2) Introduce new `data` elements for the model to represent the number of categories and the category each observation belongs to
-  - Use `array[N] int ` as a type for the cateogry input
-  - You may want to add `<lower = ..., upper = ...>` bounds for the category input - what would that be?
+   - Use `array[N] int ` as a type for the cateogry input
+   - You may want to add `<lower = ..., upper = ...>` bounds for the category input - what would that be?
 3) Introduce new `parameter` elements:
-  - A positive number for the random intercept standard deviation
-  - A vector of the effects for each category (contrast with dummy coding, where you would have one fewer effects)
+   - A positive number for the random intercept standard deviation
+   - A vector of the effects for each category (contrast with dummy coding, where you would have one fewer effects)
 4) Add the categorical predictor to the result of the matrix multiplication for the linear predictor.
-  - Note that in Stan, you can index a `vector` by an array to obtain a `vector` the same length as the array
+   - Note that in Stan, you can index a `vector` by an array to obtain a `vector` the same length as the array
 5) Add a prior for the standard deviation and then put a `normal(0, ...)` prior on the category random intercepts
 
 How does the fit change from the fixed effect
